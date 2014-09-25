@@ -165,7 +165,7 @@ class citfact_logger extends CModule
         if (sizeof($sqlBatchErrors) > 0) {
             return false;
         }
-        
+
         return true;
     }
 
