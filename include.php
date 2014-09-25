@@ -11,5 +11,10 @@
 
 use Bitrix\Main\Loader;
 
+if (file_exists(getenv('DOCUMENT_ROOT').'/vendor/autoload.php')) {
+    require_once getenv('DOCUMENT_ROOT').'/vendor/autoload.php';
+}
+
 Loader::registerAutoLoadClasses('citfact.logger', array(
+    'Citfact\Logger\Logger' => 'lib/Logger.php'
 ));
