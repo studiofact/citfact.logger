@@ -16,5 +16,8 @@ if (file_exists(getenv('DOCUMENT_ROOT').'/vendor/autoload.php')) {
 }
 
 Loader::registerAutoLoadClasses('citfact.logger', array(
-    'Citfact\Logger\Logger' => 'lib/Logger.php'
+    'Citfact\Logger\Formatter\BitrixEntityFormatter' => 'lib/Formatter/BitrixEntityFormatter.php',
+    'Citfact\Logger\Handler\BitrixEntityHandler' => 'lib/Handler/BitrixEntityHandler.php',
+    'Citfact\Logger\Logger' => 'lib/Logger.php',
+    'Citfact\Logger\LoggerAgent' => 'lib/LoggerAgent.php',
 ));

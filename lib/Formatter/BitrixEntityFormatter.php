@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-namespace Citfact\Logger;
+namespace Citfact\Logger\Formatter;
 
-use Monolog\Logger as BaseLogger;
-
-class Logger {}
+class BitrixEntityFormatter {}

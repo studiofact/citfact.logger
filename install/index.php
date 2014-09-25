@@ -10,6 +10,7 @@
  */
 
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Application;
 
 Loc::loadMessages(__FILE__);
 
@@ -49,6 +50,11 @@ class citfact_logger extends CModule
      * @var string
      */
     public $PARTNER_URI;
+
+    /**
+     * @var Bitrix\Main\DB\ConnectionPool
+     */
+    private $connection;
 
     /**
      * Construct object
@@ -138,6 +144,12 @@ class citfact_logger extends CModule
      */
     public function installDB()
     {
+        $sqlBatch = file_get_contents($this->MODULE_PATH . '/install/db/install.sql');
+        $sqlBatchErrors = $this->connection->executeSqlBatch($sqlBatch);
+        if (sizeof($sqlBatchErrors) > 0) {
+            return false;
+        }
+
         return true;
     }
 
@@ -148,6 +160,12 @@ class citfact_logger extends CModule
      */
     public function unInstallDB()
     {
+        $sqlBatch = file_get_contents($this->MODULE_PATH . '/install/db/uninstall.sql');
+        $sqlBatchErrors = $this->connection->executeSqlBatch($sqlBatch);
+        if (sizeof($sqlBatchErrors) > 0) {
+            return false;
+        }
+        
         return true;
     }
 

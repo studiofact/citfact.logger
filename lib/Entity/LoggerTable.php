@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Citfact\Logger;
+namespace Citfact\Logger\Entity;
 
-use Monolog\Logger as BaseLogger;
+use Bitrix\Main\Entity;
 
-class Logger {}
+class LoggerTable extends Entity\DataManager {}
