@@ -11,6 +11,7 @@
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
+use Citfact\Logger\LoggerManager;
 
 Loc::loadMessages(__FILE__);
 Loader::includeModule('citfact.logger');
@@ -20,12 +21,12 @@ $menuList[] = array(
     'section' => 'logger',
     'sort' => 200,
     'text' => Loc::getMessage('LOGGER_TITLE'),
-    'url' => '',
+    'url' => 'logger.php',
     'icon' => 'logger_menu_icon',
     'page_icon' => 'logger_page_icon',
     'more_url' => array(),
     'items_id' => 'logger_menu',
-    'items' => array(),
+    'items' => LoggerManager::getUniqChannels(),
 );
 
 return $menuList;

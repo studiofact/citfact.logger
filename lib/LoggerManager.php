@@ -23,6 +23,23 @@ class LoggerManager
      */
     public static function getUniqChannels()
     {
-        return array();
+        $queryBuilder = new Entity\Query(LoggerTable::getEntity());
+        $filterResult = $queryBuilder
+            ->registerRuntimeField('CHANNEL',
+                array('expression' => array('DISTINCT CHANNEL')
+            ))
+            ->setSelect(array('CHANNEL'))
+            ->setOrder('ID')
+            ->exec();
+
+        $channelList = array();
+        while ($channel = $filterResult->fetch()) {
+            $channelList[] = array(
+                'text' => $channel['CHANNEL'],
+                'url' => sprintf('logger.php?find_channel=%s', $channel['CHANNEL']),
+            );
+        }
+
+        return $channelList;
     }
 }

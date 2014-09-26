@@ -199,6 +199,8 @@ class citfact_logger extends CModule
      */
     public function installFiles()
     {
+        CopyDirFiles($this->MODULE_PATH . '/install/admin', getenv('DOCUMENT_ROOT') . '/bitrix/admin', true, true);
+
         return true;
     }
 
@@ -209,6 +211,8 @@ class citfact_logger extends CModule
      */
     public function unInstallFiles()
     {
+        DeleteDirFiles($this->MODULE_PATH . '/install/admin', getenv('DOCUMENT_ROOT') . '/bitrix/admin');
+        
         return true;
     }
 }
