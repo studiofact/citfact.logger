@@ -13,21 +13,21 @@ namespace Citfact\Logger\Handler;
 
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
-use Bitrix\Main\Entity;
+use Bitrix\Main\Entity\DataManager;
 
 class BitrixEntityHandler extends AbstractProcessingHandler
 {
     /**
-     * @var \Bitrix\Main\Entity
+     * @var \Bitrix\Main\Entity\DataManager
      */
     private $entity;
 
     /**
-     * @param Entity $entity
+     * @param DataManager $entity
      * @param int $level
      * @param bool $bubble
      */
-    public function __construct(Entity $entity, $level = Logger::DEBUG, $bubble = true)
+    public function __construct(DataManager $entity, $level = Logger::DEBUG, $bubble = true)
     {
         $this->entity = $entity;
         parent::__construct($level, $bubble);
