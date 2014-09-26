@@ -18,3 +18,21 @@
       }
   }
 ```
+
+## Пример использования
+
+``` php
+\Bitrix\Main\Loader::includeModule('citfact.logger');
+
+// Create a log channel
+$logger = new \Citfact\Logger\Logger('Sale');
+
+$logger->addDebug('Debug');
+$logger->addInfo('Info');
+$logger->addNotice('Notice');
+$logger->addWarning('Warning');
+$logger->addError('Error');
+$logger->addCritical('Critical');
+$logger->addAlert('Alert');
+$logger->addEmergency('Emergency');
+```

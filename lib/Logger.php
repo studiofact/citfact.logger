@@ -11,6 +11,22 @@
 
 namespace Citfact\Logger;
 
+use Citfact\Logger\Entity\LoggerTable;
+use Citfact\Logger\Handler\BitrixEntityHandler;
 use Monolog\Logger as BaseLogger;
 
-class Logger {}
+class Logger extends BaseLogger
+{
+    /**
+     * @param string             $name       The logging channel
+     * @param HandlerInterface[] $handlers   Optional stack of handlers, the first one in the array is called first, etc.
+     * @param callable[]         $processors Optional array of processors
+     */
+    public function __construct($name, array $handlers = array(), array $processors = array())
+    {
+        parent::__construct($name, $handlers, $processors);
+
+        // Add default handler
+        $this->pushHandler(new BitrixEntityHandler(new LoggerTable()));
+    }
+}
