@@ -21,4 +21,5 @@ Loader::registerAutoLoadClasses('citfact.logger', array(
     'Citfact\Logger\Handler\BitrixEntityHandler' => 'lib/Handler/BitrixEntityHandler.php',
     'Citfact\Logger\Logger' => 'lib/Logger.php',
     'Citfact\Logger\LoggerAgent' => 'lib/LoggerAgent.php',
+    'Citfact\Logger\LoggerManager' => 'lib/LoggerManager.php',
 ));
