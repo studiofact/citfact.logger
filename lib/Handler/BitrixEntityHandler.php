@@ -11,4 +11,38 @@
 
 namespace Citfact\Logger\Handler;
 
-class BitrixEntityHandler {}
+use Monolog\Logger;
+use Monolog\Handler\AbstractProcessingHandler;
+use Bitrix\Main\Entity;
+
+class BitrixEntityHandler extends AbstractProcessingHandler
+{
+    /**
+     * @var \Bitrix\Main\Entity
+     */
+    private $entity;
+
+    /**
+     * @param Entity $entity
+     * @param int $level
+     * @param bool $bubble
+     */
+    public function __construct(Entity $entity, $level = Logger::DEBUG, $bubble = true)
+    {
+        $this->entity = $entity;
+        parent::__construct($level, $bubble);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function write(array $record)
+    {
+        $this->entity->add(array(
+            'CHANNEL' => $record['channel'],
+            'LEVEL' => $record['level'],
+            'MESSAGE' => $record['formatted'],
+            'TIME' => $record['datetime']->format('U'),
+        ));
+    }
+}

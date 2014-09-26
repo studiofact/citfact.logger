@@ -72,6 +72,8 @@ class citfact_logger extends CModule
 
         $this->MODULE_VERSION = $arModuleVersion['VERSION'];
         $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
+
+        $this->connection = Application::getConnection();
     }
 
     /**
