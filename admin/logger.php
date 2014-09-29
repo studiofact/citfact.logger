@@ -115,4 +115,9 @@ require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/prolog_admin_aft
 </form>
 <?
 $adminList->displayList();
+
+echo BeginNote();
+echo Loc::getMessage('LOGGER_LEVEL_DESC');
+echo EndNote();
+
 require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/epilog_admin.php';
