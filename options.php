@@ -22,6 +22,7 @@ $moduleId = 'citfact.logger';
 $allOptions = array(
     array('CLEAN_LOGS', Loc::getMessage('LOGGER_CLEAN_LOGS'), 'Y', array('checkbox', 'Y')),
     array('STORAGE_TIME', Loc::getMessage('LOGGER_STORAGE_TIME'), 604800, array('text', 20)),
+    array('FORMAT_TIME', Loc::getMessage('LOGGER_FORMAT_TIME'), 'F j, Y, g:i a', array('text', 20)),
 );
 
 $controlTabs = array(array(

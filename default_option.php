@@ -16,4 +16,5 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 $citfact_logger_default_option = array(
     'CLEAN_LOGS' => 'Y',
     'STORAGE_TIME' => 604800,
+    'FORMAT_TIME' => 'F j, Y, g:i a',
 );

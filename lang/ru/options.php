@@ -10,6 +10,7 @@
  */
 
 $MESS['LOGGER_CLEAN_LOGS'] = 'Удалять старые логи';
+$MESS['LOGGER_FORMAT_TIME'] = 'Формат дата';
 $MESS['LOGGER_STORAGE_TIME'] = 'Время хранения логов(в секундах)';
 $MESS['LOGGER_TAB'] = 'Настройки';
 $MESS['LOGGER_TAB_TITLE'] = 'Настройки';

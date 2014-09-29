@@ -12,6 +12,7 @@
 require_once getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/prolog_admin_before.php';
 
 use Citfact\Logger\Entity\LoggerTable;
+use Citfact\Logger\LoggerManager;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Entity;
 
@@ -21,6 +22,8 @@ Loc::loadMessages(__FILE__);
 
 $app = \Bitrix\Main\Application::getInstance();
 $request = $app->getContext()->getRequest();
+
+$moduleId = 'citfact.logger';
 $currentPage = $GLOBALS['APPLICATION']->GetCurPage();
 
 $headers = array(
@@ -32,10 +35,10 @@ $headers = array(
 );
 
 $filterFields = array(
-    'filter_channel' => array('name' => Loc::getMessage('LOGGER_TABLE_CHANNEL'), 'type' => array('text')),
-    'filter_level' => array('name' => Loc::getMessage('LOGGER_TABLE_LEVEL'), 'type' => array('text')),
-    'filter_message' => array('name' => Loc::getMessage('LOGGER_TABLE_MESSAGE'), 'type' => array('text')),
-    'filter_time' => array('name' => Loc::getMessage('LOGGER_TABLE_TIME'), 'type' => array('text')),
+    'filter_channel' => array('code' => 'CHANNEL', 'name' => Loc::getMessage('LOGGER_TABLE_CHANNEL'), 'type' => array('text')),
+    'filter_level' => array('code' => 'LEVEL', 'name' => Loc::getMessage('LOGGER_TABLE_LEVEL'), 'type' => array('text')),
+    'filter_message' => array('code' => 'MESSAGE', 'name' => Loc::getMessage('LOGGER_TABLE_MESSAGE'), 'type' => array('text')),
+    'filter_time' => array('code' => 'TIME', 'name' => Loc::getMessage('LOGGER_TABLE_TIME'), 'type' => array('text')),
 );
 
 $tableId = 'tbl_logger';
@@ -61,6 +64,7 @@ $requestFilter = array();
 foreach ($filterFields as $filterFieldName => $params) {
     foreach ($request->getQueryList()->toArray() as $query => $value) {
         if ($filterFieldName != $query) continue;
+        $requestFilter[$params['code']] = trim($value);
     }
 }
 
@@ -74,10 +78,13 @@ $resultData->navStart();
 
 $adminList->navText($resultData->getNavPrint(Loc::getMessage('PAGES')));
 while ($item = $resultData->fetch()) {
-    $adminList->addRow($item['ID'], $item);
+    $row =& $adminList->addRow($item['ID'], $item);
+    $row->AddViewField('TIME', LoggerManager::getFormatTime($item['TIME']));
+    $row->AddViewField('LEVEL', LoggerManager::getViewColorLevel($item['LEVEL']));
 }
 
 $GLOBALS['APPLICATION']->SetTitle(Loc::getMessage('LOGGER_SECTION_TITLE'));
+$adminList->checkListMode();
 
 require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/prolog_admin_after.php';
 ?>
@@ -107,6 +114,5 @@ require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/prolog_admin_aft
     ?>
 </form>
 <?
-$adminList->checkListMode();
 $adminList->displayList();
 require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/epilog_admin.php';
