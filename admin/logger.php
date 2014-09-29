@@ -61,10 +61,15 @@ $sortBy = ($request->getQuery('by')) ? strtoupper($request->getQuery('by')) : 'I
 $sortOrder = ($request->getQuery('order')) ? : 'asc';
 
 $requestFilter = array();
-foreach ($filterFields as $filterFieldName => $params) {
+foreach ($filterFields as $fieldName => $params) {
     foreach ($request->getQueryList()->toArray() as $query => $value) {
-        if ($filterFieldName != $query) continue;
+        if ($fieldName != $query) continue;
         $requestFilter[$params['code']] = trim($value);
+        $filterFields[$fieldName]['value'] = htmlspecialchars($value);
+    }
+
+    if (!isset($filterFields[$fieldName]['value'])) {
+        $filterFields[$fieldName]['value'] = '';
     }
 }
 
@@ -91,20 +96,20 @@ require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/prolog_admin_aft
 <form name="find_form" method="GET" action="<?= $currentPage ?>?">
     <?
     $adminFilter->Begin();
-    foreach ($filterFields as $filterFieldName => $params): ?>
+    foreach ($filterFields as $fieldName => $params): ?>
         <tr>
             <td><?= $params['name'] ?>:</td>
             <td>
                 <? if ($params['type'][0] == 'checkbox'): ?>
-                    <input type="checkbox" name="<?= $filterFieldName ?>"
+                    <input type="checkbox" name="<?= $fieldName ?>"
                            value="Y" <?= ($params['value'] == 'Y') ? 'checked' : '' ?>>
                 <? elseif ($params['type'][0] == 'text'): ?>
                     <input type="text" maxlength="255"
-                           value="<?= $params['value'] ?>" name="<?= $filterFieldName ?>">
+                           value="<?= $params['value'] ?>" name="<?= $fieldName ?>">
                 <?
                 elseif ($params['type'][0] == 'textarea'): ?>
                     <textarea rows="<?= $params['type'][1] ?>" cols="<?= $params['type'][2] ?>"
-                              name="<? $filterFieldName ?>"><?= $params['value'] ?></textarea>
+                              name="<? $fieldName ?>"><?= $params['value'] ?></textarea>
                 <?endif ?>
             </td>
         </tr>

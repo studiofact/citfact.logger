@@ -29,4 +29,17 @@ class Logger extends BaseLogger
         // Add default handler
         $this->pushHandler(new BitrixEntityHandler(new LoggerTable()));
     }
+
+    /**
+     * Proxy adds a log record.
+     *
+     * @param  integer $level   The logging level
+     * @param  string  $message The log message
+     * @param  array   $context The log context
+     * @return Boolean Whether the record has been processed
+     */
+    public function addRecord($level, $message, array $context = array())
+    {
+        parent::addRecord($level, $message, $context);
+    }
 }
