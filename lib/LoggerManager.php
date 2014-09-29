@@ -36,7 +36,7 @@ class LoggerManager
         while ($channel = $filterResult->fetch()) {
             $channelList[] = array(
                 'text' => $channel['CHANNEL'],
-                'url' => sprintf('logger.php?find_channel=%s', $channel['CHANNEL']),
+                'url' => sprintf('logger.php?find_channel=%s&set_filter=Y', $channel['CHANNEL']),
             );
         }
 
