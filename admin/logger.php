@@ -38,7 +38,7 @@ $filterFields = array(
     'filter_channel' => array('code' => 'CHANNEL', 'name' => Loc::getMessage('LOGGER_TABLE_CHANNEL'), 'type' => array('text')),
     'filter_level' => array('code' => 'LEVEL', 'name' => Loc::getMessage('LOGGER_TABLE_LEVEL'), 'type' => array('text')),
     'filter_message' => array('code' => 'MESSAGE', 'name' => Loc::getMessage('LOGGER_TABLE_MESSAGE'), 'type' => array('text')),
-    'filter_time' => array('code' => 'TIME', 'name' => Loc::getMessage('LOGGER_TABLE_TIME'), 'type' => array('text')),
+    'filter_time' => array('code' => 'TIME', 'name' => Loc::getMessage('LOGGER_TABLE_TIME'), 'type' => array('period')),
 );
 
 $tableId = 'tbl_logger';
@@ -63,7 +63,7 @@ $sortOrder = ($request->getQuery('order')) ? : 'asc';
 $requestFilter = array();
 foreach ($filterFields as $fieldName => $params) {
     foreach ($request->getQueryList()->toArray() as $query => $value) {
-        if ($fieldName != $query) continue;
+        if ($fieldName != $query || $params['type'][0] == 'period') continue;
         $requestFilter[$params['code']] = trim($value);
         $filterFields[$fieldName]['value'] = htmlspecialchars($value);
     }
@@ -71,6 +71,14 @@ foreach ($filterFields as $fieldName => $params) {
     if (!isset($filterFields[$fieldName]['value'])) {
         $filterFields[$fieldName]['value'] = '';
     }
+}
+
+$filterFields['filter_time']['value'][0] = $dateFirst = trim($request->getQuery('filter_time'));
+$filterFields['filter_time']['value'][1] = $dateSecond = trim($request->getQuery('filter_time_interval'));
+if (strlen($dateFirst) > 0 || strlen($dateSecond) > 0) {
+    $dateFirst = MkDateTime(FmtDate($dateFirst, 'D.M.Y'), 'd.m.Y');
+    $dateSecond = MkDateTime(FmtDate($dateSecond, 'D.M.Y').' 23:59', 'd.m.Y H:i');
+    $requestFilter['><TIME'] = array($dateFirst, $dateSecond);
 }
 
 $queryBuilder = new Entity\Query(LoggerTable::getEntity());
@@ -106,11 +114,12 @@ require getenv('DOCUMENT_ROOT') . '/bitrix/modules/main/include/prolog_admin_aft
                 <? elseif ($params['type'][0] == 'text'): ?>
                     <input type="text" maxlength="255"
                            value="<?= $params['value'] ?>" name="<?= $fieldName ?>">
-                <?
-                elseif ($params['type'][0] == 'textarea'): ?>
+                <? elseif ($params['type'][0] == 'textarea'): ?>
                     <textarea rows="<?= $params['type'][1] ?>" cols="<?= $params['type'][2] ?>"
                               name="<? $fieldName ?>"><?= $params['value'] ?></textarea>
-                <?endif ?>
+                <? elseif ($params['type'][0] == 'period'): ?>
+                    <?= CalendarPeriod($fieldName, $params['value'][0], $fieldName.'_interval', $params['value'][1], 'find_form', 'Y') ?>
+                <? endif ?>
             </td>
         </tr>
     <? endforeach;
