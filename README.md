@@ -36,3 +36,26 @@ $logger->addCritical('Critical');
 $logger->addAlert('Alert');
 $logger->addEmergency('Emergency');
 ```
+
+Регистрация каналов глобально в приложение
+
+``` php
+// init.php
+...
+\Bitrix\Main\Loader::includeModule('citfact.logger');
+
+$sale = new \Citfact\Logger\Logger('Sale');
+
+// Или другой хандлер
+$order = new \Monolog\Logger('Order');
+$order->pushHandler(new \Monolog\Handler\StreamHandler('path/to/your.log', Logger::WARNING));
+
+// Регистрируем
+Monolog\Registry::addLogger($sale);
+Monolog\Registry::addLogger($order);
+
+// test.php
+...
+Monolog\Registry::sale()->addError('Error');
+Monolog\Registry::order()->addAlert('Alert');
+```
