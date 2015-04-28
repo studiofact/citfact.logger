@@ -13,7 +13,6 @@ namespace Citfact\Logger;
 
 use Bitrix\Main\Entity;
 use Bitrix\Main\Config;
-//use Monolog\Logger;
 use Monolog\Logger as BaseLogger;
 use Citfact\Logger\Entity\LoggerTable;
 
