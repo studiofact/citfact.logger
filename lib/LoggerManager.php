@@ -13,7 +13,8 @@ namespace Citfact\Logger;
 
 use Bitrix\Main\Entity;
 use Bitrix\Main\Config;
-use Monolog\Logger;
+//use Monolog\Logger;
+use Monolog\Logger as BaseLogger;
 use Citfact\Logger\Entity\LoggerTable;
 
 class LoggerManager
@@ -22,14 +23,14 @@ class LoggerManager
      * Translates Monolog log levels to html color priorities.
      */
     private static $logLevels = array(
-        Logger::DEBUG     => '#cccccc',
-        Logger::INFO      => '#468847',
-        Logger::NOTICE    => '#3a87ad',
-        Logger::WARNING   => '#c09853',
-        Logger::ERROR     => '#f0ad4e',
-        Logger::CRITICAL  => '#FF7708',
-        Logger::ALERT     => '#C12A19',
-        Logger::EMERGENCY => '#000000',
+        BaseLogger::DEBUG     => '#cccccc',
+        BaseLogger::INFO      => '#468847',
+        BaseLogger::NOTICE    => '#3a87ad',
+        BaseLogger::WARNING   => '#c09853',
+        BaseLogger::ERROR     => '#f0ad4e',
+        BaseLogger::CRITICAL  => '#FF7708',
+        BaseLogger::ALERT     => '#C12A19',
+        BaseLogger::EMERGENCY => '#000000',
     );
 
     /**
