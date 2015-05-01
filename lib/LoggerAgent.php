@@ -40,6 +40,6 @@ class LoggerAgent
             }
         }
 
-        return "Citfact\\Logger\\LoggerAgent::cleanLogs($logsCount)";
+        return "\\Citfact\\Logger\\LoggerAgent::cleanLogs($logsCount)";
     }
 }
