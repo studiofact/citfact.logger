@@ -18,6 +18,12 @@
       }
   }
 ```
+Подключить composer автолоадер 
+``` php
+// init.php
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+```
 
 ## Пример использования
 
@@ -41,7 +47,7 @@ $logger->addEmergency('Emergency');
 
 ``` php
 // init.php
-...
+
 \Bitrix\Main\Loader::includeModule('citfact.logger');
 
 $sale = new \Citfact\Logger\Logger('Sale');
@@ -55,7 +61,7 @@ Monolog\Registry::addLogger($sale);
 Monolog\Registry::addLogger($order);
 
 // test.php
-...
+
 Monolog\Registry::sale()->addError('Error');
 Monolog\Registry::order()->addAlert('Alert');
 ```
